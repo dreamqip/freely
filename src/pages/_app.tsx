@@ -1,17 +1,25 @@
 import '@/styles/globals.css';
 
-import type { AppProps as NextAppProps } from 'next/app';
-import useWrappedStore from '@/store';
+import type { AppProps } from '@/types/app';
+import { createStore } from '@/store';
 import { DefaultSeo } from 'next-seo';
 import { Provider } from 'react-redux';
-import SEO from '@/next-seo.config';
 import { Montserrat } from '@next/font/google';
-import MainLayout from '@/layouts/MainLayout';
-import dynamic from 'next/dynamic';
+import ProgressBar from '@badrap/bar-of-progress';
+import SEO from '@/next-seo.config';
+import Layout from '@/components/Layout';
+import Router from 'next/router';
 
-const ProgressBar = dynamic(() => import('@/components/ProgressBar'), {
-  ssr: false,
+const progress = new ProgressBar({
+  size: 4,
+  color: '#6200EE',
+  className: 'bar-of-progress',
+  delay: 100,
 });
+
+Router.events.on('routeChangeStart', progress.start);
+Router.events.on('routeChangeComplete', progress.finish);
+Router.events.on('routeChangeError', progress.finish);
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -19,25 +27,19 @@ const montserrat = Montserrat({
   weight: ['300', '400', '500', '600', '700', '800'],
 });
 
-type AppProps<P> = {
-  Component: NextAppProps<P>['Component'] & { theme?: string };
-  rest: NextAppProps<P>['pageProps'];
-} & P;
+const store = createStore();
 
-function MyApp({ Component, ...rest }: AppProps<NextAppProps>) {
-  const { store, props } = useWrappedStore(rest);
-
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <DefaultSeo {...SEO} />
-      <ProgressBar />
       <Provider store={store}>
-        <MainLayout font={montserrat.variable} theme={Component.theme}>
-          <Component {...props.pageProps} />
-        </MainLayout>
+        <Layout font={montserrat.variable} theme={Component.theme}>
+          <Component {...pageProps} />
+        </Layout>
       </Provider>
     </>
   );
 }
 
-export default MyApp;
+export default App;

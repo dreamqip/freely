@@ -2,7 +2,7 @@ import type { IMovieCredits, ITvShowCredits } from '@/types/credits';
 import type { FC } from 'react';
 import CastCard from './CastCard';
 import { SwiperSlide } from 'swiper/react';
-import SwiperLazy from '@/components/SwiperLazy';
+import Swiper from '@/components/Swiper';
 import dynamic from 'next/dynamic';
 
 const Empty = dynamic(() => import('@/components/Empty'));
@@ -19,7 +19,7 @@ const CastCarousel: FC<CastListProps> = ({ credits, title }) => {
         {title}
       </h2>
       {credits.cast.length > 0 ? (
-        <SwiperLazy>
+        <Swiper>
           {credits &&
             credits.cast.map((person) => {
               // check if array have person who performed two roles in the movies
@@ -38,9 +38,9 @@ const CastCarousel: FC<CastListProps> = ({ credits, title }) => {
                 );
               }
             })}
-        </SwiperLazy>
+        </Swiper>
       ) : (
-        <Empty description='No cast found' />
+        <Empty message='No cast found' />
       )}
     </div>
   );

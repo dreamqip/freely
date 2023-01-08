@@ -39,7 +39,7 @@ const Comment: FC<Props> = ({ review }) => {
       <div className='mr-2 md:mr-4'>
         <div className='h-8 w-8 md:h-[40px] md:w-[40px]'>
           <ImageWithFallback
-            className='rounded-full'
+            className='rounded-full object-cover'
             src={`https://ui-avatars.com/api/?rounded=true&name=${review.author}&background=random`}
             alt={review.author}
             width={40}
