@@ -90,22 +90,15 @@ const Hero: FC<IHeroProps> = ({ series }) => {
           )}
           <div className='font-light tracking-widest text-white'>
             {series?.number_of_seasons}{' '}
-            {series && series.number_of_seasons > 1 ? 'Seasons' : 'Season'}
+            {series?.number_of_seasons === 1 ? 'Season' : 'Seasons'}
           </div>
           <div className='my-4 leading-6 tracking-widest text-white'>
             {series?.genres?.map((genre) => genre.name).join(', ')}
           </div>
-          {/*<Link*/}
-          {/*  href={{*/}
-          {/*    pathname: '/room/[id]',*/}
-          {/*    query: { type: 'series', id: series?.id },*/}
-          {/*  }}*/}
-          {/*>*/}
           <button className='play-btn cursor-not-allowed' disabled>
             <PlayIcon className='h-10 w-10 fill-current' />
             <span className='ml-2'>play</span>
           </button>
-          {/*</Link>*/}
         </div>
       </div>
     </>
