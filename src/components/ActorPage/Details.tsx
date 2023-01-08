@@ -1,8 +1,9 @@
 import type { IPerson } from '@/types/person';
-import { FC, memo } from 'react';
+import type { FC } from 'react';
 import { parsePersonDetails } from '@/utilities/parsePersonDetails';
 import { imageBaseUrlOriginal } from '@/services/themoviedb';
-import ImageWithFallback from '@/components/Image';
+import { shimmer, toBase64 } from '@/utilities/shimmer';
+import ImageLegacyWithFallback from '@/components/ImageLegacy';
 
 interface Props {
   person: IPerson;
@@ -14,14 +15,20 @@ const Details: FC<Props> = ({ person }) => {
   return (
     <div className='grid grid-cols-1 gap-x-8 lg:grid-cols-3'>
       <div className='flex justify-center lg:items-start'>
-        <ImageWithFallback
-          src={`${imageBaseUrlOriginal}${person?.profile_path}`}
-          alt={person?.name}
-          priority
-          width={400}
-          height={600}
-          className='aspect-[2/3] w-3/4 rounded-md object-cover md:w-1/2 lg:w-full'
-        />
+        <div className='w-3/4 md:w-1/2 lg:w-full'>
+          <ImageLegacyWithFallback
+            src={`${imageBaseUrlOriginal}${person?.profile_path}`}
+            alt={person?.name}
+            priority
+            width={400}
+            height={600}
+            placeholder='blur'
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(
+              shimmer(400, 600)
+            )}`}
+            className='aspect-[2/3] rounded-md object-cover'
+          />
+        </div>
       </div>
       <div className='mt-6 lg:col-span-2 lg:m-0'>
         <h1 className='text-3xl dark:text-white'>{person?.name}</h1>
@@ -47,4 +54,4 @@ const Details: FC<Props> = ({ person }) => {
   );
 };
 
-export default memo(Details);
+export default Details;

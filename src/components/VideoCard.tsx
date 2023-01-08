@@ -11,8 +11,8 @@ const VideoCard: FC<CardProps> = ({ id, type, name }) => {
   return (
     <div>
       <LiteYouTubeEmbed id={id} title={name} />
-      <div className='mt-4 text-lg dark:text-white'>{name}</div>
-      <div className='text-md text-gray-500'>{type}</div>
+      <div className='mt-4 text-md md:text-lg dark:text-white'>{name}</div>
+      <div className='text-sm md:text-md text-gray-500'>{type}</div>
     </div>
   );
 };

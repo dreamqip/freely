@@ -1,20 +1,19 @@
-import type { FC } from 'react';
-import Link from 'next/link';
+import { type FC, useRef } from 'react';
 import { useRouter } from 'next/router';
-import classNames from 'classnames';
+import { Bars3Icon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
+import cn from 'classnames';
 import HeaderMenu from '@/components/Header/Menu';
 import SwitchButton from '@/components/Header/SwitchButton';
 import dynamic from 'next/dynamic';
 import Logo from '@/components/Logo';
-import { Bars3Icon } from '@heroicons/react/24/solid';
 import useEventListener from '@/hooks/useEventListener';
-import { useRef } from 'react';
 
 const MobileNav = dynamic(() => import('@/components/Header/MobileNav'), {
   loading: () => <Bars3Icon className='h-6 w-6' />,
 });
 
-const MainHeader: FC = () => {
+const Header: FC = () => {
   const router = useRouter();
   const headerRef = useRef<HTMLDivElement | null>(null);
 
@@ -31,7 +30,7 @@ const MainHeader: FC = () => {
   const isShowPage =
     router.pathname === '/movies/[id]' || router.pathname === '/series/[id]';
 
-  const headerClasses = classNames(
+  const headerClasses = cn(
     'fixed flex items-center z-50 inset-0 w-full h-20 bg-white dark:bg-black lg:bg-white-90 dark:lg:bg-dark-90 transition-all duration-300',
     {
       'dark:bg-transparent dark:lg:bg-transparent show-page': isShowPage,
@@ -58,4 +57,4 @@ const MainHeader: FC = () => {
   );
 };
 
-export default MainHeader;
+export default Header;
