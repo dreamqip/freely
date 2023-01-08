@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import GithubFilled from '@ant-design/icons/GithubFilled';
+import GithubIcon from '@/components/GithubIcon';
 
-const MainFooter: FC = () => {
+const Footer: FC = () => {
   return (
     <footer className='relative flex flex-0-auto flex-col items-center justify-between gap-4 bg-inherit py-6 px-12 text-lg sm:flex-row sm:gap-0'>
       <div className='flex items-center'>
@@ -21,11 +21,11 @@ const MainFooter: FC = () => {
         rel='noopener noreferrer'
         className='flex items-center gap-2'
       >
-        <GithubFilled />
+        <GithubIcon className='w-6 h-6 fill-white' />
         <span>Source code</span>
       </a>
     </footer>
   );
 };
 
-export default MainFooter;
+export default Footer;
