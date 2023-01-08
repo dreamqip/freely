@@ -4,7 +4,7 @@ import type { IMovies } from '@/types/movies';
 import type { FC } from 'react';
 import { SwiperSlide } from 'swiper/react';
 import ShowCard from './ShowCard';
-import SwiperLazy from '@/components/SwiperLazy';
+import Swiper from '@/components/Swiper';
 import dynamic from 'next/dynamic';
 
 const Empty = dynamic(() => import('@/components/Empty'));
@@ -21,7 +21,7 @@ const ShowCarousel: FC<Props> = ({ series, title }) => {
         {title}
       </h2>
       {series && series.results.length > 0 ? (
-        <SwiperLazy>
+        <Swiper>
           {series.results.map((show: MixedShow) => {
             return (
               <SwiperSlide key={show.id}>
@@ -29,9 +29,9 @@ const ShowCarousel: FC<Props> = ({ series, title }) => {
               </SwiperSlide>
             );
           })}
-        </SwiperLazy>
+        </Swiper>
       ) : (
-        <Empty description={`No ${title.toLowerCase()} shows found`} />
+        <Empty message={`No ${title.toLowerCase()} shows found`} />
       )}
     </div>
   );

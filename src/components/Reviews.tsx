@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import type { IReviews } from '@/types/reviews';
-import Comment from '@/components/Comment';
 import dynamic from 'next/dynamic';
 
+const Comment = dynamic(() => import('@/components/Comment'));
 const Empty = dynamic(() => import('@/components/Empty'));
 
 interface Props {
@@ -22,7 +22,7 @@ const Reviews: FC<Props> = ({ reviews }) => {
           ))}
         </div>
       ) : (
-        <Empty description='No reviews found' />
+        <Empty message='No reviews found' />
       )}
     </div>
   );
