@@ -21,9 +21,8 @@ https://freelym.vercel.app/
 - [React](https://reactjs.org/)
 - [Next.js](https://nextjs.org/)
 - [Redux](https://redux-toolkit.js.org/)
-- [Next-redux-wrapper](https://www.npmjs.com/package/next-redux-wrapper)
 - [TailwindCSS](https://tailwindcss.com/)
-- [Antd](https://ant.design/)
+- [Netlify](https://www.netlify.com/)
 
 ## Run Locally
 
@@ -57,3 +56,7 @@ To run this project, you will need to add the following environment variables to
 
 `NEXT_PUBLIC_API_KEY`
 you can get your own key here https://developers.themoviedb.org/3/getting-started/introduction
+`API_KEY`
+you can get your own key here https://developers.themoviedb.org/3/getting-started/introduction
+`BASE_URL`
+https://api.themoviedb.org/3
