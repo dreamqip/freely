@@ -1,23 +1,11 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
-import useDebounce from '@/hooks/useDebounce';
+import { type ChangeEvent, type FC, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useAppDispatch } from '@/hooks/redux';
 import { setSearchQuery } from '@/features/search/searchSlice';
 
-interface Props {
-  trigger: any;
-}
-
-const SearchInput: FC<Props> = ({ trigger }) => {
+const SearchInput: FC = () => {
   const [search, setSearch] = useState('');
   const dispatch = useAppDispatch();
-  const debouncedSearch = useDebounce(search, 300);
-
-  useEffect(() => {
-    if (debouncedSearch) {
-      trigger(debouncedSearch, true);
-    }
-  }, [debouncedSearch, trigger]);
 
   const handleSearch = (query: ChangeEvent<HTMLInputElement>) => {
     const { value } = query.target;

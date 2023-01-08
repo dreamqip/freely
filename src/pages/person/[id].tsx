@@ -1,44 +1,41 @@
-import type { InferGetServerSidePropsType, NextPage } from 'next';
-import { useRouter } from 'next/router';
+import type {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from 'next';
+import type { IPerson } from '@/types/person';
+import { getPersonById } from '@/services/themoviedb';
+import { NextSeo, type NextSeoProps } from 'next-seo';
 import Details from '@/components/ActorPage/Details';
 import dynamic from 'next/dynamic';
-import {
-  getActorById,
-  getRunningQueriesThunk,
-  useGetActorByIdQuery,
-} from '@/services/themoviedb';
-import { wrapper } from '@/store';
-import { NextSeo, NextSeoProps } from 'next-seo';
 
 const ActorMoviesList = dynamic(
   () => import('@/components/ActorPage/ActorMoviesList')
 );
 
 const ProfileImageList = dynamic(
-  () => import('@/components/ActorPage/ProfileImageList')
+  () => import('@/components/ActorPage/ProfileImageList'),
+  {
+    ssr: false,
+  }
 );
 
 const PersonPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ id }) => {
-  const router = useRouter();
-  const { data } = useGetActorByIdQuery(id, {
-    skip: router.isFallback,
-  });
-
+> = ({ person, id }) => {
   const seoOptions: NextSeoProps = {
-    title: data?.name,
-    description: data?.biography,
+    title: person?.name,
+    description: person?.biography,
     canonical: `https://freely.vercel.app/person/${id}`,
     openGraph: {
-      title: data?.name,
-      description: data?.biography,
+      title: person?.name,
+      description: person?.biography,
       images: [
         {
-          url: `https://image.tmdb.org/t/p/original${data?.profile_path}`,
+          url: `https://image.tmdb.org/t/p/original${person?.profile_path}`,
           width: 1280,
           height: 720,
-          alt: data?.name,
+          alt: person?.name,
         },
       ],
     },
@@ -47,36 +44,40 @@ const PersonPage: NextPage<
   return (
     <div>
       <NextSeo {...seoOptions} />
-      {data ? (
-        <>
-          <Details person={data} />
-          <ActorMoviesList
-            movies={data.combined_credits.cast}
-            title='Known for'
-          />
-          <ProfileImageList images={data.images.profiles} />
-        </>
-      ) : null}
+      <Details person={person} />
+      <ActorMoviesList
+        movies={person.combined_credits.cast}
+        title='Known for'
+      />
+      <ProfileImageList images={person.images.profiles} />
     </div>
   );
 };
 
 export default PersonPage;
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  ({ dispatch }) =>
-    async (context) => {
-      const { id } = context.query;
-      const parsedId = parseInt(id as string, 10);
+export const getServerSideProps: GetServerSideProps<{
+  person: IPerson;
+  id: number;
+}> = async ({ params, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=86400, s-maxage=86400, stale-while-revalidate=43200'
+  );
+  const id = Number(params?.id);
 
-      dispatch(getActorById.initiate(parsedId));
+  const person = await getPersonById(id, {});
 
-      await Promise.all(dispatch(getRunningQueriesThunk()));
+  if (!person) {
+    return {
+      notFound: true,
+    };
+  }
 
-      return {
-        props: {
-          id: parsedId,
-        },
-      };
-    }
-);
+  return {
+    props: {
+      person,
+      id: id,
+    },
+  };
+};

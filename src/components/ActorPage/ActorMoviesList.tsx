@@ -3,7 +3,7 @@ import ActorMovieCard from './ActorMovieCard';
 import { sortActorMoviesByPopularity } from '@/utilities/sortActorMoviesByPopularity';
 import { SwiperSlide } from 'swiper/react';
 import type { IActorCast } from '@/types/cast';
-import SwiperLazy from '@/components/SwiperLazy';
+import Swiper from '@/components/Swiper';
 import dynamic from 'next/dynamic';
 
 const Empty = dynamic(() => import('@/components/Empty'));
@@ -21,7 +21,7 @@ const ActorMoviesList: FC<MoviesListProps> = ({ movies, title }) => {
       <h2 className='mb-4 text-center text-3xl font-semibold dark:text-white md:text-4xl'>
         {title}
       </h2>
-      <SwiperLazy>
+      <Swiper>
         {sortedMovies && sortedMovies.length > 0 ? (
           sortedMovies.map((movie) => {
             return (
@@ -31,9 +31,9 @@ const ActorMoviesList: FC<MoviesListProps> = ({ movies, title }) => {
             );
           })
         ) : (
-          <Empty description='No shows found' />
+          <Empty message='No shows found' />
         )}
-      </SwiperLazy>
+      </Swiper>
     </div>
   );
 };

@@ -1,38 +1,31 @@
 import type { MixedShow } from '@/types/search';
 import type { FC } from 'react';
 import { useAppSelector } from '@/hooks/redux';
-import Spinner from '../Spinner';
-import ShowCard from '../ShowCarousel/ShowCard';
 import dynamic from 'next/dynamic';
+import Spinner from '@/components/Spinner';
 
+const Card = dynamic(() => import('@/components/ShowCarousel/ShowCard'));
 const Empty = dynamic(() => import('@/components/Empty'));
 
 interface Props {
-  isFetching: boolean;
+  isLoading: boolean;
 }
 
-const SearchResults: FC<Props> = ({ isFetching }) => {
+const SearchResults: FC<Props> = ({ isLoading }) => {
   const { results: data } = useAppSelector((state) => state.search);
 
-  if (data?.total_results === 0)
-    return (
-      <div className='mt-10'>
-        <Empty description='No results found' />
-      </div>
-    );
-
-  if (isFetching) return <Spinner />;
+  if (isLoading) return <Spinner spinnerSize={120} className='mt-10' />;
 
   return (
-    <div>
-      {data && (
-        <div className='mt-6'>
-          <div className='grid grid-cols-2 gap-6 md:grid-cols-5'>
-            {data.results.map((show: MixedShow) => {
-              return <ShowCard key={show.id} show={show} />;
-            })}
-          </div>
+    <div className='mt-10'>
+      {data && data.total_results > 0 ? (
+        <div className='grid grid-cols-2 gap-6 md:grid-cols-5'>
+          {data.results.map((show: MixedShow) => {
+            return <Card key={show.id} show={show} />;
+          })}
         </div>
+      ) : (
+        <Empty message='No results found' />
       )}
     </div>
   );

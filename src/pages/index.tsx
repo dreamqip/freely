@@ -1,21 +1,18 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import type { IMovies } from '@/types/movies';
+import type { ITvShows } from '@/types/series';
 import dynamic from 'next/dynamic';
 import Hero from '@/components/Home/Hero';
 import Explore from '@/components/Home/Explore';
-import { wrapper } from '@/store';
+import Spinner from '@/components/Spinner';
 import {
   getNowPlayingMovies,
-  getPopularTvShows,
-  getRunningQueriesThunk,
   getTopRatedMovies,
   getTopRatedSeries,
-  useGetNowPlayingMoviesQuery,
-  useGetPopularTvShowsQuery,
-  useGetTopRatedMoviesQuery,
-  useGetTopRatedSeriesQuery,
+  getTrendingSeries,
 } from '@/services/themoviedb';
-import Spinner from '@/components/Spinner';
 
+const Watch = dynamic(() => import('@/components/Home/Watch'));
 const ShowCarousel = dynamic(
   () => import('@/components/ShowCarousel/ShowCarousel'),
   {
@@ -23,45 +20,45 @@ const ShowCarousel = dynamic(
   }
 );
 
-const Watch = dynamic(() => import('@/components/Home/Watch'));
-
-const Home: NextPage = () => {
-  const { data: topRated } = useGetTopRatedMoviesQuery(1);
-  const { data: nowPlaying } = useGetNowPlayingMoviesQuery(1);
-  const { data: popularSeries } = useGetPopularTvShowsQuery(1);
-  const { data: topRatedSeries } = useGetTopRatedSeriesQuery(1);
-
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  trendingSeries,
+  topRatedSeries,
+  topRated,
+  nowPlaying,
+}) => {
   return (
     <>
       <Hero />
       <Explore />
       <Watch />
-      {topRated && nowPlaying && popularSeries && topRatedSeries ? (
-        <>
-          <ShowCarousel title='Latest Series' series={popularSeries} />
-          <ShowCarousel title='Now In Theaters' series={nowPlaying} />
-          <ShowCarousel title='Top Rated Series' series={topRatedSeries} />
-          <ShowCarousel title='Top Rated' series={topRated} />
-        </>
-      ) : null}
+      <ShowCarousel title='Trending Series' series={trendingSeries} />
+      <ShowCarousel title='Now In Theaters' series={nowPlaying} />
+      <ShowCarousel title='Top Rated Series' series={topRatedSeries} />
+      <ShowCarousel title='Top Rated Movies' series={topRated} />
     </>
   );
 };
 
 export default Home;
 
-export const getStaticProps = wrapper.getStaticProps(
-  ({ dispatch }) =>
-    async () => {
-      dispatch(getTopRatedMovies.initiate(1));
-      dispatch(getNowPlayingMovies.initiate(1));
-      dispatch(getPopularTvShows.initiate(1));
-      dispatch(getTopRatedSeries.initiate(1));
+export const getStaticProps: GetStaticProps<{
+  topRated: IMovies;
+  nowPlaying: IMovies;
+  trendingSeries: ITvShows;
+  topRatedSeries: ITvShows;
+}> = async () => {
+  const topRated = await getTopRatedMovies(1, {});
+  const nowPlaying = await getNowPlayingMovies(1, {});
+  const trendingSeries = await getTrendingSeries({});
+  const topRatedSeries = await getTopRatedSeries(1, {});
 
-      await Promise.all(dispatch(getRunningQueriesThunk()));
-
-      return {
-        props: {},
-      };
-    }
-);
+  return {
+    props: {
+      topRated,
+      nowPlaying,
+      trendingSeries,
+      topRatedSeries,
+    },
+    revalidate: 60 * 60 * 24,
+  };
+};

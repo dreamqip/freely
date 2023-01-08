@@ -1,11 +1,7 @@
-import type { InferGetServerSidePropsType, NextPage } from 'next';
-import type { IKeyword } from '@/types/movie';
-import { wrapper } from '@/store';
-import {
-  getRunningQueriesThunk,
-  getTvShowById,
-  useGetTvShowByIdQuery,
-} from '@/services/themoviedb';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { ITvShow } from '@/types/series';
+import type { NextPageWithTheme } from '@/types/app';
+import { getSeriesById } from '@/services/themoviedb';
 import Hero from '@/components/SeriesPage/Hero';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
@@ -18,8 +14,7 @@ import {
   setSeriesSimilar,
   setSeriesVideos,
 } from '@/features/series/seriesSlice';
-import { NextSeo, NextSeoProps } from 'next-seo';
-import { useRouter } from 'next/router';
+import { NextSeo, type NextSeoProps } from 'next-seo';
 import Spinner from '@/components/Spinner';
 import Storyline from '@/components/Storyline';
 
@@ -30,24 +25,20 @@ const Tabs = dynamic(() => import('@/components/Tabs'), {
 const OverviewTab = dynamic(() => import('@/components/SeriesPage/Overview'), {
   loading: () => <Spinner className='h-screen' />,
 });
-const ImagesTab = dynamic(() => import('@/components/SeriesPage/Images'), {
+const ImagesTab = dynamic(() => import('@/components/Images'), {
   loading: () => <Spinner className='h-screen' />,
 });
-const VideosTab = dynamic(() => import('@/components/SeriesPage/Videos'), {
+const VideosTab = dynamic(() => import('@/components/Videos'), {
   loading: () => <Spinner className='h-screen' />,
 });
 
-const TvShow: NextPage<
+const TvShow: NextPageWithTheme<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ id }) => {
-  const router = useRouter();
+> = ({ series, id }) => {
   const dispatch = useAppDispatch();
-  const { data: series } = useGetTvShowByIdQuery(id, {
-    skip: router.isFallback,
-  });
 
   const seoOptions: NextSeoProps = {
-    title: series?.name,
+    title: `${series.name} | Freely`,
     description: series?.overview,
     canonical: `https://freely.vercel.app/series/${id}`,
     openGraph: {
@@ -66,15 +57,14 @@ const TvShow: NextPage<
       {
         property: 'keywords',
         content:
-          series?.keywords.results
-            .map((keyword: IKeyword) => keyword.name)
-            .join(', ') || '',
+          series?.keywords.results.map((keyword) => keyword.name).join(', ') ||
+          '',
       },
     ],
   };
 
   useEffect(() => {
-    if (series && !router.isFallback) {
+    if (series) {
       dispatch(setSeriesReviews(series.reviews));
       dispatch(setSeriesImages(series.images));
       dispatch(setSeriesVideos(series.videos));
@@ -82,47 +72,59 @@ const TvShow: NextPage<
       dispatch(setSeriesRecommendations(series.recommendations));
       dispatch(setSeriesCredits(series.credits));
     }
-  }, [dispatch, id, router.isFallback, series]);
+  }, [dispatch, series]);
 
   return (
     <article>
       <NextSeo {...seoOptions} />
-      {series ? (
-        <>
-          <Hero series={series} />
-          <Storyline series={series} />
-          <Tabs
-            overview={<OverviewTab />}
-            images={<ImagesTab />}
-            videos={<VideosTab />}
-          />
-        </>
-      ) : (
-        <Spinner />
-      )}
+      <Hero series={series} />
+      <Storyline series={series} />
+      <Tabs
+        tabs={[
+          {
+            name: 'Overview',
+            component: <OverviewTab />,
+          },
+          {
+            name: 'Images',
+            component: <ImagesTab />,
+          },
+          {
+            name: 'Videos',
+            component: <VideosTab />,
+          },
+        ]}
+      />
     </article>
   );
 };
 
-// @ts-ignore
 TvShow.theme = 'dark';
 
 export default TvShow;
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  ({ dispatch }) =>
-    async (ctx) => {
-      const { id } = ctx.query;
-      const parsedId = parseInt(id as string, 10);
+export const getServerSideProps: GetServerSideProps<{
+  series: ITvShow;
+  id: number;
+}> = async ({ params, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=86400, s-maxage=86400, stale-while-revalidate=43200'
+  );
+  const id = Number(params?.id);
 
-      dispatch(getTvShowById.initiate(parsedId));
+  const series = await getSeriesById(id, {});
 
-      await Promise.all(dispatch(getRunningQueriesThunk()));
+  if (!series) {
+    return {
+      notFound: true,
+    };
+  }
 
-      return {
-        props: {
-          id: parsedId,
-        },
-      };
-    }
-);
+  return {
+    props: {
+      series,
+      id,
+    },
+  };
+};

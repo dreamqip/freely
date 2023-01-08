@@ -1,23 +1,18 @@
-import type { InferGetServerSidePropsType, NextPage } from 'next';
-import type { IKeyword } from '@/types/movie';
-import {
-  getMovieById,
-  getRunningQueriesThunk,
-  useGetMovieByIdQuery,
-} from '@/services/themoviedb';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { NextPageWithTheme } from '@/types/app';
+import type { IKeyword, IMovie } from '@/types/movie';
+import { getMovieById } from '@/services/themoviedb';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/hooks/redux';
 import {
   setCredits,
   setImages,
   setRecommendations,
+  setReviews,
   setSimilar,
   setVideos,
-  setReviews,
 } from '@/features/movie/movieSlice';
-import { wrapper } from '@/store';
-import { NextSeo, NextSeoProps } from 'next-seo';
-import { useRouter } from 'next/router';
+import { NextSeo, type NextSeoProps } from 'next-seo';
 import Spinner from '@/components/Spinner';
 import Hero from '@/components/MoviePage/Hero';
 import dynamic from 'next/dynamic';
@@ -30,21 +25,17 @@ const Tabs = dynamic(() => import('@/components/Tabs'), {
 const OverviewTab = dynamic(() => import('@/components/MoviePage/Overview'), {
   loading: () => <Spinner className='h-screen' />,
 });
-const ImagesTab = dynamic(() => import('@/components/MoviePage/Images'), {
+const ImagesTab = dynamic(() => import('@/components/Images'), {
   loading: () => <Spinner className='h-screen' />,
 });
-const VideosTab = dynamic(() => import('@/components/MoviePage/Videos'), {
+const VideosTab = dynamic(() => import('@/components/Videos'), {
   loading: () => <Spinner className='h-screen' />,
 });
 
-const MoviePage: NextPage<
+const MoviePage: NextPageWithTheme<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ id }) => {
-  const router = useRouter();
+> = ({ movie, id }) => {
   const dispatch = useAppDispatch();
-  const { data: movie } = useGetMovieByIdQuery(id, {
-    skip: router.isFallback,
-  });
 
   const seoOptions: NextSeoProps = {
     title: movie?.title,
@@ -74,7 +65,7 @@ const MoviePage: NextPage<
   };
 
   useEffect(() => {
-    if (movie && !router.isFallback) {
+    if (movie) {
       dispatch(setReviews(movie.reviews));
       dispatch(setImages(movie.images));
       dispatch(setVideos(movie.videos));
@@ -82,47 +73,59 @@ const MoviePage: NextPage<
       dispatch(setRecommendations(movie.recommendations));
       dispatch(setCredits(movie.credits));
     }
-  }, [dispatch, id, movie, router.isFallback]);
+  }, [dispatch, id, movie]);
 
   return (
     <article className='flex flex-col'>
       <NextSeo {...seoOptions} />
-      {movie ? (
-        <>
-          <Hero movie={movie} />
-          <Storyline series={movie} />
-          <Tabs
-            overview={<OverviewTab />}
-            images={<ImagesTab />}
-            videos={<VideosTab />}
-          />
-        </>
-      ) : (
-        <Spinner />
-      )}
+      <Hero movie={movie} />
+      <Storyline series={movie} />
+      <Tabs
+        tabs={[
+          {
+            name: 'Overview',
+            component: <OverviewTab />,
+          },
+          {
+            name: 'Images',
+            component: <ImagesTab />,
+          },
+          {
+            name: 'Videos',
+            component: <VideosTab />,
+          },
+        ]}
+      />
     </article>
   );
 };
 
-// @ts-ignore
 MoviePage.theme = 'dark';
 
 export default MoviePage;
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  ({ dispatch }) =>
-    async (ctx) => {
-      const { id } = ctx.query;
-      const parsedId = parseInt(id as string, 10);
+export const getServerSideProps: GetServerSideProps<{
+  movie: IMovie;
+  id: number;
+}> = async ({ params, res }) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, max-age=86400, s-maxage=86400, stale-while-revalidate=43200'
+  );
+  const id = Number(params?.id);
 
-      dispatch(getMovieById.initiate(parsedId));
+  const movie = await getMovieById(id, {});
 
-      await Promise.all(dispatch(getRunningQueriesThunk()));
+  if (!movie) {
+    return {
+      notFound: true,
+    };
+  }
 
-      return {
-        props: {
-          id: parsedId,
-        },
-      };
-    }
-);
+  return {
+    props: {
+      movie,
+      id,
+    },
+  };
+};
