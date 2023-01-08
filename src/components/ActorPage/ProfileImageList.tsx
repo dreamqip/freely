@@ -52,7 +52,7 @@ const ProfileImageList: FC<ImageListProps> = ({ images }) => {
                 blurDataURL={`data:image/svg+xml;base64,${toBase64(
                   shimmer(photo.width, photo.height)
                 )}`}
-                className='hover:opacity-70 transition-opacity duration-300 ease-in-out rounded-md'
+                className='hover:opacity-70 transition-opacity duration-300 ease-in-out rounded-md object-cover'
               />
             </div>
           ))}

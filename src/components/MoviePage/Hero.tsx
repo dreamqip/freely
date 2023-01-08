@@ -5,7 +5,7 @@ import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
-import { imageBaseUrlOriginal } from '@/services/themoviedb';
+import { imageBaseUrlHd } from '@/services/themoviedb';
 import ImageWithFallback from '@/components/Image';
 
 interface IHeroProps {
@@ -44,7 +44,7 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback
-            src={`${imageBaseUrlOriginal}${movie.backdrop_path}`}
+            src={`${imageBaseUrlHd}${movie.backdrop_path}`}
             alt={movie.title}
             fill
             priority
@@ -72,7 +72,7 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
                     fill
                     sizes='(max-width: 640px) 180px, (max-width: 768px) 341px, 341px'
                     className='object-contain object-center'
-                    src={`${imageBaseUrlOriginal}${movie?.images?.logos[0].file_path}`}
+                    src={`${imageBaseUrlHd}${movie?.images?.logos[0].file_path}`}
                     onLoadingComplete={() => setLoadedLogo(true)}
                   />
                 </m.div>
@@ -86,17 +86,10 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
           <div className='my-4 leading-6 tracking-widest text-white'>
             {movie?.genres?.map((genre) => genre.name).join(', ')}
           </div>
-          {/*<Link*/}
-          {/*  href={{*/}
-          {/*    pathname: '/room/[id]',*/}
-          {/*    query: { type: 'movies', id: movies?.id },*/}
-          {/*  }}*/}
-          {/*>*/}
           <button className='play-btn cursor-not-allowed' disabled>
             <PlayIcon className='h-10 w-10 fill-current' />
             <span className='ml-2'>play</span>
           </button>
-          {/*</Link>*/}
         </div>
       </div>
     </>

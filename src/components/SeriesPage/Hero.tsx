@@ -1,12 +1,11 @@
-import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import type { ITvShow } from '@/types/series';
 import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
+import { imageBaseUrlHd } from '@/services/themoviedb';
 import ImageWithFallback from '@/components/Image';
-import { imageBaseUrlOriginal } from '@/services/themoviedb';
 
 export interface IHeroProps {
   series: ITvShow;
@@ -44,7 +43,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback
-            src={`${imageBaseUrlOriginal}${series.backdrop_path}`}
+            src={`${imageBaseUrlHd}${series.backdrop_path}`}
             alt={series?.name}
             fill
             priority
@@ -77,7 +76,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                     priority
                     sizes='(max-width: 640px) 180px, (max-width: 768px) 341px, 341px'
                     className='object-contain object-center'
-                    src={`${imageBaseUrlOriginal}${series?.images?.logos[0].file_path}`}
+                    src={`${imageBaseUrlHd}${series?.images?.logos[0].file_path}`}
                     onLoadingComplete={() => setLoadedLogo(true)}
                   />
                 </m.div>

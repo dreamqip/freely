@@ -33,7 +33,7 @@ const ShowImage: FC<Props> = ({ show }) => {
           }`}
           width={400}
           height={600}
-          sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 10vw'
+          sizes='(max-width: 480px) 33vw, (max-width: 568px) 25vw, (max-width: 1024px) 15vw, (max-width: 1440px) 10vw, (max-width: 1920px) 8vw, 7vw'
           alt={
             ('title' in show && show.title) ||
             show.name ||

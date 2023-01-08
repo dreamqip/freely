@@ -6,6 +6,7 @@ import type { ISearch } from '@/types/search';
 import type { IMovies } from '@/types/movies';
 
 export const imageBaseUrlOriginal = 'https://image.tmdb.org/t/p/original';
+export const imageBaseUrlHd = 'https://image.tmdb.org/t/p/w1280';
 export const imageBaseUrlW400 = 'https://image.tmdb.org/t/p/w400';
 
 class TMDBApi {
