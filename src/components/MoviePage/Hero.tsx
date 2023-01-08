@@ -24,13 +24,15 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
   }, [movie]);
 
   useEffect(() => {
-    scrollYProgress.on('change', (latestValue) => {
-      const newProgress = Math.max(1 - 8 * latestValue, 0.2);
-      scrollProgress.set(newProgress);
-    });
+    if (loaded) {
+      scrollYProgress.on('change', (latestValue) => {
+        const newProgress = Math.max(1 - 8 * latestValue, 0.2);
+        scrollProgress.set(newProgress);
+      });
+    }
 
     return () => scrollYProgress.clearListeners();
-  }, [scrollProgress, scrollYProgress]);
+  }, [scrollProgress, scrollYProgress, loaded]);
 
   return (
     <>

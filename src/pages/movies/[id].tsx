@@ -38,7 +38,7 @@ const MoviePage: NextPageWithTheme<
   const dispatch = useAppDispatch();
 
   const seoOptions: NextSeoProps = {
-    title: movie?.title,
+    title: `${movie.title} | Freely`,
     description: movie?.overview,
     canonical: `https://freely.vercel.app/movies/${id}`,
     openGraph: {

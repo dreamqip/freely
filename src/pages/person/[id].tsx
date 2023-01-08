@@ -24,7 +24,7 @@ const PersonPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ person, id }) => {
   const seoOptions: NextSeoProps = {
-    title: person?.name,
+    title: `${person.name} | Freely`,
     description: person?.biography,
     canonical: `https://freely.vercel.app/person/${id}`,
     openGraph: {
