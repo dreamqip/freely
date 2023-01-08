@@ -15,11 +15,15 @@ export const parseMovieDetails = (movie: IMovie) => {
     },
     {
       detailName: 'Budget',
-      detailValue: `$${getNumberWithCommas(movie.budget)}`,
+      detailValue: movie.budget
+        ? `$${getNumberWithCommas(movie.budget)}`
+        : 'N/A',
     },
     {
       detailName: 'Revenue',
-      detailValue: `$${getNumberWithCommas(movie.revenue)}`,
+      detailValue: movie.revenue
+        ? `$${getNumberWithCommas(movie.revenue)}`
+        : 'N/A',
     },
     {
       detailName: 'Genres',

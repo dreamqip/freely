@@ -1,13 +1,13 @@
 import type { FC, PropsWithChildren } from 'react';
 import { useEffect, useRef } from 'react';
-import { Swiper, SwiperRef } from 'swiper/react';
+import { Swiper as SwiperJS, SwiperRef } from 'swiper/react';
 import { swiperOptions } from '@/utilities/swiperConfig';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 
-const SwiperLazy: FC<PropsWithChildren> = ({ children }) => {
+const Swiper: FC<PropsWithChildren> = ({ children }) => {
   const swiperRef = useRef<SwiperRef | null>(null);
 
   useEffect(() => {
@@ -22,10 +22,10 @@ const SwiperLazy: FC<PropsWithChildren> = ({ children }) => {
   }, [swiperRef, children]);
 
   return (
-    <Swiper ref={swiperRef} className='py-4 px-2' {...swiperOptions}>
+    <SwiperJS ref={swiperRef} className='py-4 px-2' {...swiperOptions}>
       {children}
-    </Swiper>
+    </SwiperJS>
   );
 };
 
-export default SwiperLazy;
+export default Swiper;

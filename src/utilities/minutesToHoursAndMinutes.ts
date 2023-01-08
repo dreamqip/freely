@@ -1,7 +1,11 @@
 export const minutesToHoursAndMinutes = (minutes: number) => {
-  return `${(minutes / 60) ^ 0}h ` + (minutes % 60) + 'min';
+  const hours = Math.floor(minutes / 60);
+  const minutesLeft = minutes % 60;
+  return `${hours}h ${minutesLeft}m`;
 };
 
 export const minutesToMinutes = (minutes: number) => {
-  return (minutes % 60) + 'min';
+  const hours = Math.floor(minutes / 60);
+  const minutesLeft = minutes % 60;
+  return hours > 0 ? `${hours}h ${minutesLeft}m` : `${minutesLeft}m`;
 };
