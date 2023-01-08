@@ -1,13 +1,13 @@
 import type { FC } from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-
-interface PageProps {
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+interface CardProps {
   id: string;
   type: string;
   name: string;
 }
 
-const VideoCard: FC<PageProps> = ({ id, type, name }) => {
+const VideoCard: FC<CardProps> = ({ id, type, name }) => {
   return (
     <div>
       <LiteYouTubeEmbed id={id} title={name} />

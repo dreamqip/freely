@@ -3,18 +3,17 @@ import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
 import s from '@/styles/tabs.module.css';
 
 interface ActiveState {
-  overview: true | undefined;
-  images: true | undefined;
-  videos: true | undefined;
+  [key: string]: true | undefined;
 }
 
 interface TabsProps {
-  overview: ReactElement;
-  images: ReactElement;
-  videos: ReactElement;
+  tabs: {
+    name: string;
+    component: ReactElement;
+  }[];
 }
 
-const Tabs: FC<TabsProps> = ({ overview, images, videos }) => {
+const Tabs: FC<TabsProps> = ({ tabs }) => {
   const [isActivated, setIsActivated] = useState<ActiveState>({
     overview: true,
     images: undefined,
@@ -43,41 +42,26 @@ const Tabs: FC<TabsProps> = ({ overview, images, videos }) => {
       >
         <List
           className='flex w-full flex-row items-center justify-center gap-x-6 py-6'
-          aria-label='tabs example'
+          aria-label='tabs list'
         >
-          <Trigger value='overview' asChild>
-            <div className={s.trigger}>
-              <span>Overview</span>
-            </div>
-          </Trigger>
-          <Trigger value='images' asChild>
-            <div className={s.trigger}>
-              <span>Images</span>
-            </div>
-          </Trigger>
-          <Trigger value='videos' asChild>
-            <div className={s.trigger}>
-              <span>Videos</span>
-            </div>
-          </Trigger>
+          {tabs.map((tab) => (
+            <Trigger key={tab.name} value={tab.name.toLowerCase()} asChild>
+              <div className={s.trigger}>
+                <span className='capitalize'>{tab.name}</span>
+              </div>
+            </Trigger>
+          ))}
         </List>
-        <Content forceMount value='overview' className={s.content}>
-          {overview}
-        </Content>
-        <Content
-          forceMount={isActivated.images}
-          value='images'
-          className={s.content}
-        >
-          {images}
-        </Content>
-        <Content
-          forceMount={isActivated.videos}
-          value='videos'
-          className={s.content}
-        >
-          {videos}
-        </Content>
+        {tabs.map((tab) => (
+          <Content
+            key={tab.name}
+            value={tab.name.toLowerCase()}
+            className={s.content}
+            forceMount={isActivated[tab.name.toLowerCase()]}
+          >
+            {tab.component}
+          </Content>
+        ))}
       </Root>
     </>
   );
