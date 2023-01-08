@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Button } from 'antd';
+import Button from '@/components/Button';
 
 const Error500: NextPage = () => {
   const refreshPage = () => {
@@ -18,15 +18,7 @@ const Error500: NextPage = () => {
         Our servers could not handle your request. Don&apos;t worry, our
         development team was already notified. Try refreshing the page.
       </div>
-      <Button
-        className='mt-10 bg-primary-500 hover:scale-105 dark:bg-primary-dark'
-        type='primary'
-        shape='round'
-        size='large'
-        onClick={refreshPage}
-      >
-        Refresh the page
-      </Button>
+      <Button onClick={refreshPage}>Refresh the page</Button>
     </div>
   );
 };
