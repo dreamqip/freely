@@ -3,14 +3,13 @@ import { RefObject, useEffect, useRef } from 'react';
 export const useObserver = (
   ref: RefObject<HTMLElement>,
   canLoad: boolean,
-  isFetching: boolean,
   isLoading: boolean,
   callback: () => void
 ) => {
   const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    if (isLoading || isFetching) return;
+    if (isLoading) return;
     if (observer.current) observer.current?.disconnect();
     const cb = (entries: IntersectionObserverEntry[]) => {
       if (entries[0].isIntersecting && canLoad) {
@@ -22,5 +21,5 @@ export const useObserver = (
     if (ref.current) {
       observer.current.observe(ref.current);
     }
-  }, [callback, canLoad, isFetching, isLoading, ref]);
+  }, [callback, canLoad, isLoading, ref]);
 };
