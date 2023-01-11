@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import Image from 'next/image';
-import devices from '../../../public/devices.png';
+import devices from '../../public/devices.png';
 import { LazyMotion, m } from 'framer-motion';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
 import { whileInViewportVariants2 } from '@/utilities/animationVariants';

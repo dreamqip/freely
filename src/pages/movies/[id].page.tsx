@@ -14,7 +14,7 @@ import {
 } from '@/features/movie/movieSlice';
 import { NextSeo, type NextSeoProps } from 'next-seo';
 import Spinner from '@/components/Spinner';
-import Hero from '@/components/MoviePage/Hero';
+import Hero from '@/pages/movies/Hero';
 import dynamic from 'next/dynamic';
 import Storyline from '@/components/Storyline';
 
@@ -22,7 +22,7 @@ const Tabs = dynamic(() => import('@/components/Tabs'), {
   ssr: false,
 });
 
-const OverviewTab = dynamic(() => import('@/components/MoviePage/Overview'), {
+const OverviewTab = dynamic(() => import('@/pages/movies/Overview'), {
   loading: () => <Spinner className='h-screen' />,
 });
 const ImagesTab = dynamic(() => import('@/components/Images'), {

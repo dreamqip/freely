@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from 'react';
+import { type FC, type ReactElement, useState } from 'react';
 import { Content, List, Root, Trigger } from '@radix-ui/react-tabs';
 import s from '@/styles/tabs.module.css';
 

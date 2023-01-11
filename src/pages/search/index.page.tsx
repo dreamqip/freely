@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import SearchInput from '@/components/SearchPage/SearchInput';
+import SearchInput from '@/pages/search/SearchInput';
 import dynamic from 'next/dynamic';
 import useDebounce from '@/hooks/useDebounce';
 import { multiSearchQuery } from '@/services/themoviedb';
@@ -8,9 +8,7 @@ import { useEffect } from 'react';
 import { setSearchResults } from '@/features/search/searchSlice';
 
 const BackTop = dynamic(() => import('@/components/BackTop'));
-const SearchResults = dynamic(
-  () => import('@/components/SearchPage/SearchResults')
-);
+const SearchResults = dynamic(() => import('@/pages/search/SearchResults'));
 
 const Search: NextPage = () => {
   const { query } = useAppSelector((state) => state.search);

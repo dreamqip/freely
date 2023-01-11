@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import CastCarousel from '../CastCarousel/CastCarousel';
+import CastCarousel from '@/components/CastCarousel/CastCarousel';
 import { useAppSelector } from '@/hooks/redux';
 
 const Cast: FC = () => {

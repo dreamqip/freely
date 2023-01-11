@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { useAppSelector } from '@/hooks/redux';
-import ShowCarousel from '../ShowCarousel/ShowCarousel';
+import ShowCarousel from '@/components/ShowCarousel/ShowCarousel';
 
 const Recommended: FC = () => {
-  const { recommendations } = useAppSelector((state) => state.movie);
+  const { recommendations } = useAppSelector((state) => state.series);
 
   return (
     <>

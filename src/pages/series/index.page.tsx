@@ -2,7 +2,7 @@ import type { ITvShows } from '@/types/series';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import { getPopularSeries } from '@/services/themoviedb';
 import { SWRConfig } from 'swr';
-import SeriesList from '@/components/SeriesPage/SeriesList';
+import SeriesList from '@/pages/series/SeriesList';
 import dynamic from 'next/dynamic';
 
 const BackTop = dynamic(() => import('@/components/BackTop'));

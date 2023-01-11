@@ -38,6 +38,14 @@
     --swiper-theme-color: #6200ee !important;
     --swiper-navigation-size: 2rem !important;
   }
+
+  .bar-of-progress {
+    @apply bg-black text-black !important;
+  }
+
+  .dark .bar-of-progress {
+    @apply bg-white text-white !important;
+  }
 }
 
 @layer components {

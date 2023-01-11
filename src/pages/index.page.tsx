@@ -2,8 +2,8 @@ import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import type { IMovies } from '@/types/movies';
 import type { ITvShows } from '@/types/series';
 import dynamic from 'next/dynamic';
-import Hero from '@/components/Home/Hero';
-import Explore from '@/components/Home/Explore';
+import Hero from '@/pages/Hero';
+import Explore from '@/pages/Explore';
 import Spinner from '@/components/Spinner';
 import {
   getNowPlayingMovies,
@@ -12,7 +12,7 @@ import {
   getTrendingSeries,
 } from '@/services/themoviedb';
 
-const Watch = dynamic(() => import('@/components/Home/Watch'));
+const Watch = dynamic(() => import('@/pages/Watch'));
 const ShowCarousel = dynamic(
   () => import('@/components/ShowCarousel/ShowCarousel'),
   {

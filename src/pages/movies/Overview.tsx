@@ -3,8 +3,8 @@ import { useAppSelector } from '@/hooks/redux';
 import Cast from './Cast';
 import dynamic from 'next/dynamic';
 
-const Similar = dynamic(() => import('@/components/MoviePage/Similar'));
-const Recommended = dynamic(() => import('@/components/MoviePage/Recommended'));
+const Similar = dynamic(() => import('@/pages/movies/Similar'));
+const Recommended = dynamic(() => import('@/pages/movies/Recommended'));
 const Reviews = dynamic(() => import('@/components/Reviews'));
 
 const Overview: FC = () => {

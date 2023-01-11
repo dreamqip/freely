@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import Image from 'next/image';
-import wanda from '../../../public/wanda.jpeg';
+import wanda from '../../public/wanda.jpeg';
 
 const Hero: FC = () => {
   return (

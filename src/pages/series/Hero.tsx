@@ -41,7 +41,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
           animate={loaded ? 'visible' : 'hidden'}
           variants={animationVariants}
           transition={{ ease: 'easeInOut', duration: 0.75 }}
-          className='pointer-events-none fixed inset-0 z-0 h-screen select-none overflow-hidden'
+          className='pointer-events-none fixed inset-0 -z-10 select-none overflow-hidden'
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback

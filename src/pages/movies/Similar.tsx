@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useAppSelector } from '@/hooks/redux';
-import ShowCarousel from '../ShowCarousel/ShowCarousel';
+import ShowCarousel from '@/components/ShowCarousel/ShowCarousel';
 
 const Similar: FC = () => {
   const { similar } = useAppSelector((state) => state.movie);

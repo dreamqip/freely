@@ -21,7 +21,7 @@ const Footer: FC = () => {
         rel='noopener noreferrer'
         className='flex items-center gap-2'
       >
-        <GithubIcon className='w-6 h-6 fill-white' />
+        <GithubIcon className='w-6 h-6 dark:fill-white' />
         <span>Source code</span>
       </a>
     </footer>

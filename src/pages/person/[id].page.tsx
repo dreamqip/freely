@@ -6,15 +6,13 @@ import type {
 import type { IPerson } from '@/types/person';
 import { getPersonById } from '@/services/themoviedb';
 import { NextSeo, type NextSeoProps } from 'next-seo';
-import Details from '@/components/ActorPage/Details';
+import Details from '@/pages/person/Details';
 import dynamic from 'next/dynamic';
 
-const ActorMoviesList = dynamic(
-  () => import('@/components/ActorPage/ActorMoviesList')
-);
+const ActorMoviesList = dynamic(() => import('@/pages/person/ActorMoviesList'));
 
 const ProfileImageList = dynamic(
-  () => import('@/components/ActorPage/ProfileImageList'),
+  () => import('@/pages/person/ProfileImageList'),
   {
     ssr: false,
   }

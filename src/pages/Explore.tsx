@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import Image from 'next/image';
-import explore from '../../../public/explore.png';
+import explore from '../../public/explore.png';
 import { LazyMotion, m } from 'framer-motion';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
 import { whileInViewportVariants } from '@/utilities/animationVariants';

@@ -2,7 +2,7 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import type { ITvShow } from '@/types/series';
 import type { NextPageWithTheme } from '@/types/app';
 import { getSeriesById } from '@/services/themoviedb';
-import Hero from '@/components/SeriesPage/Hero';
+import Hero from '@/pages/series/Hero';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/hooks/redux';
@@ -22,7 +22,7 @@ const Tabs = dynamic(() => import('@/components/Tabs'), {
   ssr: false,
 });
 
-const OverviewTab = dynamic(() => import('@/components/SeriesPage/Overview'), {
+const OverviewTab = dynamic(() => import('@/pages/series/Overview'), {
   loading: () => <Spinner className='h-screen' />,
 });
 const ImagesTab = dynamic(() => import('@/components/Images'), {

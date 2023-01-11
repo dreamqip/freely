@@ -2,7 +2,7 @@ import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import type { IMovies } from '@/types/movies';
 import { getPopularMovies } from '@/services/themoviedb';
 import { SWRConfig } from 'swr';
-import MoviesList from '@/components/MoviePage/MoviesList';
+import MoviesList from '@/pages/movies/MoviesList';
 import dynamic from 'next/dynamic';
 
 const BackTop = dynamic(() => import('@/components/BackTop'));
