@@ -47,10 +47,10 @@ const Images: FC = () => {
           {photos.map((photo, i) => (
             <div
               key={photo.key}
-              className='relative cursor-pointer overflow-hidden'
+              onClick={() => setIndex(i)}
+              className='relative cursor-pointer overflow-hidden before:block before:absolute before:inset-0 before:bg-black before:transition-opacity before:duration-300 before:ease-in-out before:opacity-0 hover:before:opacity-50 before:z-10 rounded-md'
             >
               <ImageWithLegacyFallback
-                onClick={() => setIndex(i)}
                 sizes='(min-width: 768px) 25vw, 50vw'
                 width={photo.width}
                 height={photo.height}
@@ -60,7 +60,7 @@ const Images: FC = () => {
                 blurDataURL={`data:image/svg+xml;base64,${toBase64(
                   shimmer(photo.width, photo.height)
                 )}`}
-                className='hover:opacity-70 transition-opacity duration-300 ease-in-out rounded-md'
+                className='rounded-md'
               />
             </div>
           ))}
