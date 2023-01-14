@@ -62,3 +62,7 @@ export const getStaticProps: GetStaticProps<{
     revalidate: 60 * 60 * 24,
   };
 };
+
+export const config = {
+  runtime: 'experimental-edge',
+};

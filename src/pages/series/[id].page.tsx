@@ -128,3 +128,7 @@ export const getServerSideProps: GetServerSideProps<{
     },
   };
 };
+
+export const config = {
+  runtime: 'experimental-edge',
+};
