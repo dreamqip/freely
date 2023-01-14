@@ -6,40 +6,36 @@ import { getLanguageFullName } from './getLanguageFullName';
 export const parseMovieDetails = (movie: IMovie) => {
   return [
     {
-      detailName: 'Released',
-      detailValue: new Date(movie.release_date).toDateString(),
+      label: 'Released',
+      value: new Date(movie.release_date).toDateString(),
     },
     {
-      detailName: 'Runtime',
-      detailValue: minutesToHoursAndMinutes(movie.runtime),
+      label: 'Runtime',
+      value: minutesToHoursAndMinutes(movie.runtime),
     },
     {
-      detailName: 'Budget',
-      detailValue: movie.budget
-        ? `$${getNumberWithCommas(movie.budget)}`
-        : 'N/A',
+      label: 'Budget',
+      value: movie.budget ? `$${getNumberWithCommas(movie.budget)}` : 'N/A',
     },
     {
-      detailName: 'Revenue',
-      detailValue: movie.revenue
-        ? `$${getNumberWithCommas(movie.revenue)}`
-        : 'N/A',
+      label: 'Revenue',
+      value: movie.revenue ? `$${getNumberWithCommas(movie.revenue)}` : 'N/A',
     },
     {
-      detailName: 'Genres',
-      detailValue: movie.genres.map((genre) => genre.name).join(', '),
+      label: 'Genres',
+      value: movie.genres.map((genre) => genre.name).join(', '),
     },
     {
-      detailName: 'Status',
-      detailValue: movie.status,
+      label: 'Status',
+      value: movie.status,
     },
     {
-      detailName: 'Language',
-      detailValue: getLanguageFullName(movie.original_language),
+      label: 'Language',
+      value: getLanguageFullName(movie.original_language),
     },
     {
-      detailName: 'Production',
-      detailValue: movie.production_companies
+      label: 'Production',
+      value: movie.production_companies
         .map((company) => company.name)
         .join(', '),
     },

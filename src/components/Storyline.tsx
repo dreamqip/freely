@@ -37,25 +37,36 @@ const Storyline: FC<Props> = ({ series }) => {
         <h3 className='text-md mt-2 dark:text-primary-dark md:text-lg'>
           {series.overview}
         </h3>
-        <table className='mt-2 w-full border-spacing-2 sm:w-auto'>
-          <tbody>
-            {parsedDetails.map((detail) => {
-              return (
+        <div className='mt-4'>
+          <table className='w-full table-fixed'>
+            <tbody>
+              {parsedDetails.map((detail) => (
                 <tr
-                  key={detail.detailName}
-                  className='flex items-start justify-between gap-x-4'
+                  key={detail.label}
+                  className='flex justify-between gap-x-6 md:table-row'
                 >
-                  <td className='max-w-[200px] dark:text-white md:max-w-fit'>
-                    {detail.detailName}
+                  <td className='text-sm font-light tracking-tight text-white md:text-base'>
+                    {detail.label}
                   </td>
-                  <td className='max-w-[200px] text-right dark:text-white md:max-w-fit'>
-                    {detail.detailValue || 'Unknown'}
+                  <td className='text-sm font-light tracking-tight text-white md:text-base truncate'>
+                    {detail.label === 'Homepage' && detail.value !== 'N/A' ? (
+                      <a
+                        className='underline md:hover:underline md:underline-none'
+                        href={detail.value.toString()}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        {detail.value}
+                      </a>
+                    ) : (
+                      <span>{detail.value}</span>
+                    )}
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -37,12 +37,12 @@ const Details: FC<Props> = ({ person }) => {
             {parsedDetails &&
               parsedDetails.map((detail) => {
                 return (
-                  <tr key={detail.detailName}>
-                    <td className='pr-4 align-text-top dark:text-white'>
-                      {detail.detailName}
+                  <tr key={detail.label}>
+                    <td className='text-sm font-light tracking-tight pr-4 dark:text-white md:text-base align-text-top'>
+                      {detail.label}
                     </td>
-                    <td className='dark:text-white'>
-                      {detail.detailValue || 'Alive'}
+                    <td className='text-sm font-light tracking-tight dark:text-white md:text-base'>
+                      {detail.value}
                     </td>
                   </tr>
                 );

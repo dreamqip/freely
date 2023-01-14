@@ -98,7 +98,7 @@ interface ProductionCountry {
   name: string;
 }
 
-interface Season {
+export interface Season {
   air_date: string;
   episode_count: number;
   id: number;

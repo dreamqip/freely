@@ -6,6 +6,7 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
 import { imageBaseUrlHd } from '@/services/themoviedb';
 import ImageWithFallback from '@/components/Image';
+import { getSeriesSeasonsLength } from '@/utilities/getSeriesSeasons';
 
 export interface IHeroProps {
   series: ITvShow;
@@ -33,6 +34,17 @@ const Hero: FC<IHeroProps> = ({ series }) => {
     return () => scrollYProgress.clearListeners();
   }, [scrollProgress, scrollYProgress, loaded]);
 
+  const seasons = getSeriesSeasonsLength(series.seasons);
+
+  const countAverageEpisodesPerSeason = () => {
+    const totalEpisodes = series.seasons.reduce(
+      (acc, season) => acc + season.episode_count,
+      0
+    );
+
+    return '~' + Math.round(totalEpisodes / seasons) + ' episodes per season';
+  };
+
   return (
     <>
       <LazyMotion features={loadFeatures}>
@@ -41,7 +53,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
           animate={loaded ? 'visible' : 'hidden'}
           variants={animationVariants}
           transition={{ ease: 'easeInOut', duration: 0.75 }}
-          className='pointer-events-none fixed inset-0 -z-10 select-none overflow-hidden'
+          className='pointer-events-none fixed top-0 right-0 left-0 md:bottom-0 -z-10 select-none w-full'
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback
@@ -49,18 +61,18 @@ const Hero: FC<IHeroProps> = ({ series }) => {
             alt={series?.name}
             fill
             priority
-            sizes='(max-width: 640px) 100vw, (max-width: 768px) 75vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, (max-width: 1920px) 25vw, 20vw'
-            className='aspect-video object-cover object-top'
+            sizes='100vw'
+            className='aspect-video object-cover w-screen h-auto relative md:absolute'
             onLoadingComplete={() => setLoaded(true)}
           />
-          <div className='absolute inset-0 z-0 h-full w-full bg-radial-gradient'></div>
+          <div className='absolute inset-0 bg-radial-gradient'></div>
         </m.div>
       </LazyMotion>
 
       <div className='relative'>
-        <div className='max-w-xl'>
+        <div className='max-w-xl text-sm md:text-base'>
           {series?.images?.logos && series?.images?.logos.length > 0 ? (
-            <div className='py-6'>
+            <div className='pb-6 pt-14'>
               <LazyMotion features={loadFeatures}>
                 <m.div
                   initial='hidden'
@@ -70,13 +82,13 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                     ease: 'easeIn',
                     duration: 1,
                   }}
-                  className='relative min-h-[100px] max-w-[180px] md:min-h-[170px] md:max-w-[341px]'
+                  className='relative max-w-[180px] min-h-[170px] md:max-w-[341px]'
                 >
                   <ImageWithFallback
                     alt={series?.name}
                     fill
                     priority
-                    sizes='(max-width: 640px) 180px, (max-width: 768px) 341px, 341px'
+                    sizes='(min-width: 768px) 341px, 180px'
                     className='object-contain object-center'
                     src={`${imageBaseUrlHd}${series?.images?.logos[0].file_path}`}
                     onLoadingComplete={() => setLoadedLogo(true)}
@@ -90,10 +102,17 @@ const Hero: FC<IHeroProps> = ({ series }) => {
             </h1>
           )}
           <div className='font-light tracking-widest text-white'>
-            {series?.number_of_seasons}{' '}
-            {series?.number_of_seasons === 1 ? 'Season' : 'Seasons'}
+            {seasons} {seasons === 1 ? 'Season' : 'Seasons'} (
+            {countAverageEpisodesPerSeason()})
           </div>
-          <div className='my-4 leading-6 tracking-widest text-white'>
+          <div className='flex items-center mt-2'>
+            {series.first_air_date && (
+              <div className='font-light tracking-widest text-white'>
+                {new Date(series.first_air_date).getFullYear()}
+              </div>
+            )}
+          </div>
+          <div className='my-4 leading-6 font-light tracking-widest text-white'>
             {series?.genres?.map((genre) => genre.name).join(', ')}
           </div>
           <button className='play-btn cursor-not-allowed' disabled>

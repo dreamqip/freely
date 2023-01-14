@@ -76,7 +76,7 @@ const MoviePage: NextPageWithTheme<
   }, [dispatch, id, movie]);
 
   return (
-    <article className='flex flex-col'>
+    <article className='relative top-14 md:top-20 pb-24'>
       <NextSeo {...seoOptions} />
       <Hero movie={movie} />
       <Storyline series={movie} />

@@ -42,7 +42,7 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
           animate={loaded ? 'visible' : 'hidden'}
           variants={animationVariants}
           transition={{ ease: 'easeInOut', duration: 0.75 }}
-          className='pointer-events-none fixed inset-0 -z-10 select-none overflow-hidden'
+          className='pointer-events-none fixed top-0 right-0 left-0 md:bottom-0 -z-10 select-none w-full'
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback
@@ -50,29 +50,29 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
             alt={movie.title}
             fill
             priority
-            sizes='(max-width: 640px) 100vw, (max-width: 768px) 75vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, (max-width: 1920px) 25vw, 20vw'
-            className='aspect-video object-cover object-top'
+            sizes='100vw'
+            className='aspect-video object-cover w-screen h-auto relative md:absolute'
             onLoadingComplete={() => setLoaded(true)}
           />
-          <div className='absolute inset-0 z-0 h-full bg-radial-gradient'></div>
+          <div className='absolute inset-0 bg-radial-gradient'></div>
         </m.div>
       </LazyMotion>
       <div className='relative'>
-        <div className='max-w-xl'>
+        <div className='max-w-xl text-sm md:text-base'>
           {movie?.images?.logos && movie.images.logos.length > 0 ? (
-            <div className='py-6'>
+            <div className='pb-6 pt-14'>
               <LazyMotion features={loadFeatures}>
                 <m.div
                   initial='hidden'
                   animate={loadedLogo ? 'visible' : 'hidden'}
                   variants={animationVariants}
-                  className='relative min-h-[100px] max-w-[180px] md:min-h-[170px] md:max-w-[341px]'
+                  className='relative max-w-[180px] min-h-[170px] md:max-w-[341px]'
                 >
                   <ImageWithFallback
                     alt={movie.title}
                     priority
                     fill
-                    sizes='(max-width: 640px) 180px, (max-width: 768px) 341px, 341px'
+                    sizes='(min-width: 768px) 341px, 180px'
                     className='object-contain object-center'
                     src={`${imageBaseUrlHd}${movie?.images?.logos[0].file_path}`}
                     onLoadingComplete={() => setLoadedLogo(true)}

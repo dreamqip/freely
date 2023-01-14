@@ -75,7 +75,7 @@ const TvShow: NextPageWithTheme<
   }, [dispatch, series]);
 
   return (
-    <article>
+    <article className='relative top-14 md:top-20 pb-24'>
       <NextSeo {...seoOptions} />
       <Hero series={series} />
       <Storyline series={series} />
