@@ -27,6 +27,7 @@ const Watch: FC = () => {
         <Image
           src={devices}
           alt='watch everywhere and from any device you want to'
+          placeholder='blur'
           width={600}
           height={400}
           sizes='(max-width: 480px) 100vw, 50vw'

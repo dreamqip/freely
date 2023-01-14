@@ -27,6 +27,7 @@ const Explore: FC = () => {
           src={explore}
           alt='explore movies, tv shows and people from all over the world and from any device you want to'
           priority
+          placeholder='blur'
           sizes='(max-width: 480px) 100vw, 50vw'
           width={800}
           height={400}
