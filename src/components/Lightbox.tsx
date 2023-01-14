@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import type { LightboxExternalProps } from 'yet-another-react-lightbox';
-import ImageWithLegacyFallback from '@/components/ImageLegacy';
 import { shimmer, toBase64 } from '@/utilities/shimmer';
 
 import 'yet-another-react-lightbox/styles.css';
@@ -8,6 +7,7 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails';
 import ReactLightbox from 'yet-another-react-lightbox';
+import ImageWithFallback from '@/components/Image';
 
 const Lightbox: FC<LightboxExternalProps> = ({
   open,
@@ -39,8 +39,8 @@ const Lightbox: FC<LightboxExternalProps> = ({
 
         return (
           <div style={{ position: 'relative', width, height }}>
-            <ImageWithLegacyFallback
-              layout='fill'
+            <ImageWithFallback
+              fill
               src={image.src}
               loading='eager'
               placeholder='blur'
