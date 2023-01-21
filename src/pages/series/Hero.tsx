@@ -60,8 +60,8 @@ const Hero: FC<IHeroProps> = ({ series }) => {
             fill
             priority
             className='aspect-video object-cover w-screen h-auto relative md:absolute'
-            onLoadingComplete={() => setTimeout(() => setLoaded(true), 600)}
-            unoptimized={true}
+            onLoadingComplete={() => setTimeout(() => setLoaded(true), 0)}
+            // unoptimized={true}
           />
           <div className='absolute inset-0 bg-radial-gradient'></div>
         </m.div>
@@ -89,9 +89,9 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                     className='object-contain object-center'
                     src={`${imageBaseUrlHd}${series?.images?.logos[0].file_path}`}
                     onLoadingComplete={() =>
-                      setTimeout(() => setLoadedLogo(true), 900)
+                      setTimeout(() => setLoadedLogo(true), 0)
                     }
-                    unoptimized={true}
+                    // unoptimized={true}
                   />
                 </m.div>
               </LazyMotion>
