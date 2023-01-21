@@ -26,7 +26,6 @@ const nextConfig = {
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
   images: {
     dangerouslyAllowSVG: true,
-    formats: ['image/webp', 'image/avif'],
     remotePatterns: [
       {
         protocol: 'https',
