@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import type { IMovie } from '@/types/movie';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
@@ -18,7 +18,7 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
   const { scrollYProgress } = useScroll();
   const scrollProgress = useMotionValue(1);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoaded(false);
     setLoadedLogo(false);
   }, [movie]);

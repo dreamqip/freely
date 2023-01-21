@@ -5,8 +5,8 @@ import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
 import { imageBaseUrlHd } from '@/services/themoviedb';
-import ImageWithFallback from '@/components/Image';
 import { getSeriesSeasonsLength } from '@/utilities/getSeriesSeasons';
+import ImageWithFallback from '@/components/Image';
 
 export interface IHeroProps {
   series: ITvShow;
@@ -24,13 +24,15 @@ const Hero: FC<IHeroProps> = ({ series }) => {
   }, [series]);
 
   useEffect(() => {
-    scrollYProgress.on('change', (latestValue) => {
-      const newProgress = Math.max(1 - 8 * latestValue, 0.2);
-      scrollProgress.set(newProgress);
-    });
+    if (loaded) {
+      scrollYProgress.on('change', (latestValue) => {
+        const newProgress = Math.max(1 - 8 * latestValue, 0.2);
+        scrollProgress.set(newProgress);
+      });
+    }
 
     return () => scrollYProgress.clearListeners();
-  }, [scrollProgress, scrollYProgress]);
+  }, [scrollProgress, scrollYProgress, loaded]);
 
   const seasons = getSeriesSeasonsLength(series.seasons);
 
@@ -60,8 +62,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
             fill
             priority
             className='aspect-video object-cover w-screen h-auto relative md:absolute'
-            onLoadingComplete={() => setTimeout(() => setLoaded(true), 0)}
-            // unoptimized={true}
+            onLoadingComplete={() => setLoaded(true)}
           />
           <div className='absolute inset-0 bg-radial-gradient'></div>
         </m.div>
@@ -88,10 +89,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                     priority
                     className='object-contain object-center'
                     src={`${imageBaseUrlHd}${series?.images?.logos[0].file_path}`}
-                    onLoadingComplete={() =>
-                      setTimeout(() => setLoadedLogo(true), 0)
-                    }
-                    // unoptimized={true}
+                    onLoadingComplete={() => setLoadedLogo(true)}
                   />
                 </m.div>
               </LazyMotion>
