@@ -24,15 +24,13 @@ const Hero: FC<IHeroProps> = ({ series }) => {
   }, [series]);
 
   useEffect(() => {
-    if (loaded) {
-      scrollYProgress.on('change', (latestValue) => {
-        const newProgress = Math.max(1 - 8 * latestValue, 0.2);
-        scrollProgress.set(newProgress);
-      });
-    }
+    scrollYProgress.on('change', (latestValue) => {
+      const newProgress = Math.max(1 - 8 * latestValue, 0.2);
+      scrollProgress.set(newProgress);
+    });
 
     return () => scrollYProgress.clearListeners();
-  }, [scrollProgress, scrollYProgress, loaded]);
+  }, [scrollProgress, scrollYProgress]);
 
   const seasons = getSeriesSeasonsLength(series.seasons);
 
