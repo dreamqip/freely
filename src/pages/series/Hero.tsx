@@ -62,7 +62,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
             fill
             priority
             className='aspect-video object-cover w-screen h-auto relative md:absolute'
-            onLoadingComplete={() => setLoaded(true)}
+            onLoadingComplete={() => setTimeout(() => setLoaded(true), 200)}
             unoptimized={true}
           />
           <div className='absolute inset-0 bg-radial-gradient'></div>
