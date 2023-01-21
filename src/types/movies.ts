@@ -5,5 +5,4 @@ export interface IMovies {
   results: IMovie[];
   total_results: number;
   total_pages: number;
-  dates?: any;
 }
