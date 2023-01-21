@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect, useLayoutEffect, useState } from 'react';
 import type { ITvShow } from '@/types/series';
 import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
@@ -18,7 +18,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
   const { scrollYProgress } = useScroll();
   const scrollProgress = useMotionValue(1);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoaded(false);
     setLoadedLogo(false);
   }, [series]);
