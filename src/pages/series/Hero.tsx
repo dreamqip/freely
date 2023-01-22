@@ -1,12 +1,12 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect, useLayoutEffect, useState } from 'react';
 import type { ITvShow } from '@/types/series';
 import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
 import { imageBaseUrlHd } from '@/services/themoviedb';
-import ImageWithFallback from '@/components/Image';
 import { getSeriesSeasonsLength } from '@/utilities/getSeriesSeasons';
+import ImageWithFallback from '@/components/Image';
 
 export interface IHeroProps {
   series: ITvShow;
@@ -18,7 +18,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
   const { scrollYProgress } = useScroll();
   const scrollProgress = useMotionValue(1);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoaded(false);
     setLoadedLogo(false);
   }, [series]);
@@ -61,7 +61,6 @@ const Hero: FC<IHeroProps> = ({ series }) => {
             alt={series?.name}
             fill
             priority
-            sizes='100vw'
             className='aspect-video object-cover w-screen h-auto relative md:absolute'
             onLoadingComplete={() => setLoaded(true)}
           />
@@ -88,7 +87,6 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                     alt={series?.name}
                     fill
                     priority
-                    sizes='(min-width: 768px) 341px, 180px'
                     className='object-contain object-center'
                     src={`${imageBaseUrlHd}${series?.images?.logos[0].file_path}`}
                     onLoadingComplete={() => setLoadedLogo(true)}
