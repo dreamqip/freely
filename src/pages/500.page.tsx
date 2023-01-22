@@ -14,7 +14,7 @@ const Error500: NextPage = () => {
       <h1 className='text-center text-4xl font-black dark:text-white'>
         Something bad just happened...
       </h1>
-      <div className='mx-auto mt-4 max-w-[500px] text-center text-xl dark:text-white'>
+      <div className='mx-auto my-4 max-w-[500px] text-center text-xl dark:text-white'>
         Our servers could not handle your request. Don&apos;t worry, our
         development team was already notified. Try refreshing the page.
       </div>

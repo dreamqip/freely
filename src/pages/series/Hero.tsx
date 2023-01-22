@@ -1,12 +1,13 @@
-import { type FC, useEffect, useLayoutEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import type { ITvShow } from '@/types/series';
 import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
-import { imageBaseUrlHd } from '@/services/themoviedb';
+import { imageBaseUrlHd, imageBaseUrlOriginal } from '@/services/themoviedb';
 import { getSeriesSeasonsLength } from '@/utilities/getSeriesSeasons';
 import ImageWithFallback from '@/components/Image';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 export interface IHeroProps {
   series: ITvShow;
@@ -18,7 +19,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
   const { scrollYProgress } = useScroll();
   const scrollProgress = useMotionValue(1);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setLoaded(false);
     setLoadedLogo(false);
   }, [series]);
@@ -38,7 +39,8 @@ const Hero: FC<IHeroProps> = ({ series }) => {
 
   const countAverageEpisodesPerSeason = () => {
     const totalEpisodes = series.seasons.reduce(
-      (acc, season) => acc + season.episode_count,
+      (acc, season) =>
+        acc + (season.name === 'Specials' ? 0 : season.episode_count),
       0
     );
 
@@ -53,11 +55,11 @@ const Hero: FC<IHeroProps> = ({ series }) => {
           animate={loaded ? 'visible' : 'hidden'}
           variants={animationVariants}
           transition={{ ease: 'easeInOut', duration: 0.75 }}
-          className='pointer-events-none fixed top-0 right-0 left-0 md:bottom-0 -z-10 select-none w-full'
+          className='pointer-events-none overflow-hidden fixed top-0 right-0 left-0 md:bottom-0 -z-10 select-none w-full'
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback
-            src={`${imageBaseUrlHd}${series.backdrop_path}`}
+            src={`${imageBaseUrlOriginal}${series.backdrop_path}`}
             alt={series?.name}
             fill
             priority
@@ -78,7 +80,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                   animate={loadedLogo ? 'visible' : 'hidden'}
                   variants={animationVariants}
                   transition={{
-                    ease: 'easeIn',
+                    ease: 'easeInOut',
                     duration: 1,
                   }}
                   className='relative max-w-[180px] min-h-[170px] md:max-w-[341px]'
@@ -87,6 +89,7 @@ const Hero: FC<IHeroProps> = ({ series }) => {
                     alt={series?.name}
                     fill
                     priority
+                    sizes='(min-width: 780px) 341px, 180px'
                     className='object-contain object-center'
                     src={`${imageBaseUrlHd}${series?.images?.logos[0].file_path}`}
                     onLoadingComplete={() => setLoadedLogo(true)}

@@ -1,12 +1,12 @@
-import type { FC } from 'react';
 import type { IMovie } from '@/types/movie';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { LazyMotion, m, useMotionValue, useScroll } from 'framer-motion';
 import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
-import { imageBaseUrlHd } from '@/services/themoviedb';
+import { imageBaseUrlHd, imageBaseUrlOriginal } from '@/services/themoviedb';
 import ImageWithFallback from '@/components/Image';
+import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 
 interface IHeroProps {
   movie: IMovie;
@@ -18,7 +18,7 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
   const { scrollYProgress } = useScroll();
   const scrollProgress = useMotionValue(1);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setLoaded(false);
     setLoadedLogo(false);
   }, [movie]);
@@ -46,11 +46,10 @@ const Hero: FC<IHeroProps> = ({ movie }) => {
           style={{ opacity: scrollProgress }}
         >
           <ImageWithFallback
-            src={`${imageBaseUrlHd}${movie.backdrop_path}`}
+            src={`${imageBaseUrlOriginal}${movie.backdrop_path}`}
             alt={movie.title}
             fill
             priority
-            sizes='100vw'
             className='aspect-video object-cover w-screen h-auto relative md:absolute'
             onLoadingComplete={() => setLoaded(true)}
           />
