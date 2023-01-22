@@ -42,7 +42,7 @@ const MoviesList: FC = () => {
     <>
       {popularMovies.length > 0 && (
         <div className='mt-6'>
-          <div className='grid grid-cols-2 gap-4 md:grid-cols-7'>
+          <div className='grid grid-cols-3 gap-4 md:grid-cols-7'>
             {popularMovies.map((show: IMovie) => {
               return <ShowCard key={show.id} show={show} />;
             })}
