@@ -54,9 +54,4 @@ Start the server
 
 To run this project, you will need to add the following environment variables to your .env.local file
 
-`NEXT_PUBLIC_API_KEY`
-you can get your own key here https://developers.themoviedb.org/3/getting-started/introduction
-`API_KEY`
-you can get your own key here https://developers.themoviedb.org/3/getting-started/introduction
-`BASE_URL`
-https://api.themoviedb.org/3
+Check the .env.example file for reference
