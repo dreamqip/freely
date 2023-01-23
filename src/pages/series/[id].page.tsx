@@ -38,7 +38,7 @@ const TvShow: NextPageWithTheme<
   const dispatch = useAppDispatch();
 
   const seoOptions: NextSeoProps = {
-    title: `${series.name} | Freely`,
+    title: series?.name,
     description: series?.overview,
     canonical: `https://freely.vercel.app/series/${id}`,
     openGraph: {

@@ -2,6 +2,7 @@ import type { ITvShows } from '@/types/series';
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import { getPopularSeries } from '@/services/themoviedb';
 import { SWRConfig } from 'swr';
+import { NextSeo } from 'next-seo';
 import SeriesList from '@/pages/series/SeriesList';
 import dynamic from 'next/dynamic';
 
@@ -11,13 +12,19 @@ const Series: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   fallback,
 }) => {
   return (
-    <div>
-      <h1 className='m-0 text-center text-6xl dark:text-white'>Series</h1>
-      <SWRConfig value={{ fallback }}>
-        <SeriesList />
-      </SWRConfig>
-      <BackTop />
-    </div>
+    <>
+      <NextSeo
+        title='Popular Series'
+        description='Check out the most popular series'
+      />
+      <div>
+        <h1 className='m-0 text-center text-6xl dark:text-white'>Series</h1>
+        <SWRConfig value={{ fallback }}>
+          <SeriesList />
+        </SWRConfig>
+        <BackTop />
+      </div>
+    </>
   );
 };
 

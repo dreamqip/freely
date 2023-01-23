@@ -2,6 +2,7 @@ import type { DefaultSeoProps } from 'next-seo';
 
 const config: DefaultSeoProps = {
   defaultTitle: 'Freely',
+  titleTemplate: '%s | Freely',
   description:
     "Welcome to Freely, the ultimate destination for movie and series enthusiasts! Here, you can find detailed information about your favorite films and TV shows, including plot summaries, cast lists, and trailer links. You can also watch trailers and learn more about your favorite actors. So whether you're a casual viewer or a die-hard fan, our website has something for everyone. Come visit us and discover the magic of movies and series!",
   canonical: 'https://freely.vercel.app/',
