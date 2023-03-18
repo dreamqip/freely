@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
+    // TODO: Remove this once there will be a docs for this
+    "ignoreDeprecations": "5.0",
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "importsNotUsedAsValues": "error",
     "skipLibCheck": true,
@@ -17,17 +23,17 @@
     "incremental": true,
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"],
-      "@/types/*": ["types/*"],
-      "@/components/*": ["components/*"],
-      "@/services/*": ["services/*"],
-      "@/features/*": ["features/*"],
-      "@/styles/*": ["styles/*"],
-      "@/hooks/*": ["hooks/*"],
-      "@/layouts/*": ["layouts/*"],
-      "@/utilities/*": ["utilities/*"]
+      "@/*": [
+        "*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
