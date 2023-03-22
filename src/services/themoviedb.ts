@@ -79,7 +79,7 @@ class TMDBApi {
   public multiSearchQuery = (query: string, page = 1) => {
     const { data, isLoading, error } = useSWR<ISearch>(
       query
-        ? `${this.baseUrl}/search/multi?api_key=${this.publicApiKey}&language=en-US&query=${query}&page=${page}&include_adult=true`
+        ? `${this.baseUrl}/search/multi?api_key=${this.publicApiKey}&language=en-US&query=${query}&page=${page}&include_adult=false`
         : null,
       this.fetcher,
       { keepPreviousData: true, revalidateOnFocus: false }
