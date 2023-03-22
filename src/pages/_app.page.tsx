@@ -4,7 +4,7 @@ import type { AppProps } from '@/types/app';
 import { createStore } from '@/store';
 import { DefaultSeo } from 'next-seo';
 import { Provider } from 'react-redux';
-import { Montserrat } from '@next/font/google';
+import { Montserrat } from 'next/font/google';
 import ProgressBar from '@badrap/bar-of-progress';
 import SEO from '@/next-seo.config';
 import Layout from '@/components/Layout';
@@ -12,7 +12,7 @@ import Router from 'next/router';
 
 const progress = new ProgressBar({
   size: 4,
-  className: 'bar-of-progress',
+  className: 'progress-bar',
   delay: 100,
 });
 
