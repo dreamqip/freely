@@ -19,7 +19,7 @@ const SearchResults: FC<Props> = ({ isLoading }) => {
   return (
     <div className='mt-10'>
       {data && data.total_results > 0 ? (
-        <div className='grid grid-cols-2 gap-6 md:grid-cols-5'>
+        <div className='grid grid-cols-3 gap-4 md:grid-cols-7'>
           {data.results.map((show: MixedShow) => {
             return <Card key={show.id} show={show} />;
           })}
