@@ -1,7 +1,7 @@
-import type { IMovieCast } from './cast';
-import type { Images } from './images';
-import type { IVideos } from './videos';
-import type { IReviews } from '@/types/reviews';
+import type { IMovieCast} from "@/types/cast";
+import type { Images} from "@/types/images";
+import type { IVideos} from "@/types/videos";
+import type { IReviews} from "@/types/reviews";
 import type { IMovieCredits } from '@/types/credits';
 
 interface IGenres {
@@ -73,4 +73,11 @@ export interface IRecommendedMovies {
   results: IMovie[];
   total_pages: number;
   total_results: number;
+}
+
+export interface IMovies {
+  page: number;
+  results: IMovie[];
+  total_results: number;
+  total_pages: number;
 }

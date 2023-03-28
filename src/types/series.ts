@@ -1,5 +1,5 @@
-import type { Images } from './images';
-import type { IVideos } from './videos';
+import type { Images} from "@/types/images";
+import type { IVideos} from "@/types/videos";
 import type { IReviews } from '@/types/reviews';
 import type { ITvShowCredits } from '@/types/credits';
 

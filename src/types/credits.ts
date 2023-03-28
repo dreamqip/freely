@@ -1,5 +1,5 @@
-import type { IMovieCast, ITvShowCast } from './cast';
-import type { IMovieCrew, ITvShowCrew } from './crew';
+import type { IMovieCast, ITvShowCast} from "@/types/cast";
+import type { IMovieCrew, ITvShowCrew} from "@/types/crew";
 
 export interface IMovieCredits {
   id: number;

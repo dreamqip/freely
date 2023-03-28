@@ -1,9 +1,8 @@
 import useSWR from 'swr';
-import type { IMovie } from '@/types/movie';
+import type { IMovie, IMovies } from '@/types/movie';
 import type { ITvShow, ITvShows } from '@/types/series';
 import type { IPerson } from '@/types/person';
 import type { ISearch } from '@/types/search';
-import type { IMovies } from '@/types/movies';
 
 export const imageBaseUrlOriginal = 'https://image.tmdb.org/t/p/original';
 export const imageBaseUrlHd = 'https://image.tmdb.org/t/p/w1280';

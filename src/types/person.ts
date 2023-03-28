@@ -1,6 +1,6 @@
-import type { IActorCast } from './cast';
-import type { IActorCrew } from './crew';
-import type { IProfile } from './images';
+import type { IActorCast} from "@/types/cast";
+import type { IActorCrew} from "@/types/crew";
+import type { IProfile} from "@/types/images";
 
 export interface IPerson {
   birthday: string | null;

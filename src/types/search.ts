@@ -1,5 +1,5 @@
-import type { IMovie } from './movie';
-import type { ITvShow } from './series';
+import type { IMovie} from "@/types/movie";
+import type { ITvShow} from "@/types/series";
 
 export interface ISearch {
   page: number;
