@@ -33,7 +33,7 @@ export const swiperOptions: SwiperOptions = {
         enabled: false,
       },
     },
-    1440: {
+    1280: {
       slidesPerView: 8,
       spaceBetween: 10,
       navigation: {
