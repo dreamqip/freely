@@ -6,7 +6,6 @@ import cn from 'classnames';
 import HeaderMenu from '@/components/Header/Menu';
 import SwitchButton from '@/components/Header/SwitchButton';
 import dynamic from 'next/dynamic';
-import Logo from '@/components/Logo';
 import useEventListener from '@/hooks/useEventListener';
 
 const MobileNav = dynamic(() => import('@/components/Header/MobileNav'), {
@@ -42,7 +41,8 @@ const Header: FC = () => {
       <div className='mx-auto flex w-full max-w-7xl flex-0-auto items-center justify-between px-4 md:px-12'>
         <div className='hidden cursor-pointer items-center gap-4 md:flex md:gap-10'>
           <Link href='/' className='flex items-center'>
-            <Logo />
+            {/*<Logo />*/}
+            <img src='/logo-trimmy-transformed.png' alt='logo' className='w-16' />
           </Link>
           <HeaderMenu />
         </div>

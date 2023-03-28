@@ -1,10 +1,9 @@
 import { type FC, useEffect, useState } from 'react';
 import type { IMovie } from '@/types/movie';
 import type { ITvShow } from '@/types/series';
-import { parseSeriesDetails } from '@/utilities/parseSeriesDetails';
 import { imageBaseUrlW400 } from '@/services/themoviedb';
-import { parseMovieDetails } from '@/utilities/parseMovieDetails';
 import { shimmer, toBase64 } from '@/utilities/shimmer';
+import { parseMovieDetails, parseSeriesDetails } from '@/utilities/helpers';
 import ImageLegacyWithFallback from '@/components/ImageLegacy';
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
 

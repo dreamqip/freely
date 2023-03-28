@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import ActorMovieCard from './ActorMovieCard';
-import { sortActorMoviesByPopularity } from '@/utilities/sortActorMoviesByPopularity';
 import { SwiperSlide } from 'swiper/react';
 import type { IActorCast } from '@/types/cast';
 import Swiper from '@/components/Swiper';
 import dynamic from 'next/dynamic';
+import {sortActorMoviesByPopularity} from "@/utilities/helpers";
 
 const Empty = dynamic(() => import('@/components/Empty'));
 

@@ -5,9 +5,9 @@ import { animationVariants } from '@/utilities/animationVariants';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { loadFeatures } from '@/utilities/loadAnimationFeatures';
 import { imageBaseUrlHd, imageBaseUrlOriginal } from '@/services/themoviedb';
-import { getSeriesSeasonsLength } from '@/utilities/getSeriesSeasons';
 import ImageWithFallback from '@/components/Image';
 import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
+import {getSeriesSeasonsLength} from "@/utilities/helpers";
 
 export interface IHeroProps {
   series: ITvShow;

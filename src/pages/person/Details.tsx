@@ -1,9 +1,9 @@
 import type { IPerson } from '@/types/person';
 import type { FC } from 'react';
-import { parsePersonDetails } from '@/utilities/parsePersonDetails';
 import { imageBaseUrlOriginal } from '@/services/themoviedb';
 import { shimmer, toBase64 } from '@/utilities/shimmer';
 import ImageLegacyWithFallback from '@/components/ImageLegacy';
+import {parsePersonDetails} from "@/utilities/helpers";
 
 interface Props {
   person: IPerson;
