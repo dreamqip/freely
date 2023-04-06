@@ -1,7 +1,7 @@
 import type { MixedShow } from '@/types/search';
 import type { ITvShows } from '@/types/series';
-import type { IMovies } from '@/types/movies';
 import type { FC } from 'react';
+import type {IMovies} from "@/types/movie";
 import { SwiperSlide } from 'swiper/react';
 import ShowCard from './ShowCard';
 import Swiper from '@/components/Swiper';
