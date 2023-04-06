@@ -24,16 +24,16 @@ const Lightbox: FC<LightboxExternalProps> = ({
     animation={{ swipe: 200 }}
     carousel={{ finite: true }}
     render={{
-      slide: (image, _, rect) => {
+      slide: ({slide,rect }) => {
         let width = rect.width;
         let height = rect.height;
 
-        if (image.width && image.height) {
+        if (slide.width && slide.height) {
           width = Math.round(
-            Math.min(rect.width, (rect.height / image.height) * image.width)
+            Math.min(rect.width, (rect.height / slide.height) * slide.width)
           );
           height = Math.round(
-            Math.min(rect.height, (rect.width / image.width) * image.height)
+            Math.min(rect.height, (rect.width / slide.width) * slide.height)
           );
         }
 
@@ -41,13 +41,13 @@ const Lightbox: FC<LightboxExternalProps> = ({
           <div style={{ position: 'relative', width, height }}>
             <ImageLegacyWithFallback
               layout='fill'
-              src={image.src}
+              src={slide.src}
               loading='eager'
               placeholder='blur'
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
                 shimmer(Number(width), Number(height))
               )}`}
-              alt={image.alt || ''}
+              alt={slide.alt || ''}
               sizes={
                 typeof window !== 'undefined'
                   ? `${Math.ceil((width / window.innerWidth) * 100)}vw`
