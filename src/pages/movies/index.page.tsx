@@ -1,5 +1,5 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
-import type { IMovies } from '@/types/movies';
+import type { IMovies } from '@/types/movie';
 import { getPopularMovies } from '@/services/themoviedb';
 import { SWRConfig } from 'swr';
 import { NextSeo } from 'next-seo';
