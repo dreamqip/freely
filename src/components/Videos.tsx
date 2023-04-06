@@ -1,6 +1,7 @@
-import { type FC, useMemo } from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '@/hooks/redux';
 import dynamic from 'next/dynamic';
+import type { Video } from '@/types/videos';
 
 const VideoCard = dynamic(() => import('@/components/VideoCard'));
 
@@ -8,8 +9,9 @@ const Empty = dynamic(() => import('@/components/Empty'));
 
 const Videos: FC = () => {
   const { movie, series } = useAppSelector((state) => state);
+  const [filteredVideos, setFilteredVideos] = useState<Video[] | null>(null);
 
-  const filteredVideos = useMemo(() => {
+  const mapVideos = useCallback(() => {
     const condition =
       (movie.videos && movie.videos.results.length === 0) ||
       (series.videos && series.videos.results.length === 0);
@@ -20,6 +22,10 @@ const Videos: FC = () => {
       series.videos?.results.filter((video) => video.site === 'YouTube')
     );
   }, [movie.videos, series.videos]);
+
+  useEffect(() => {
+    setFilteredVideos(mapVideos() || null);
+  }, [mapVideos, movie.videos, series.videos]);
 
   return (
     <div className='py-4 md:py-10 relative'>

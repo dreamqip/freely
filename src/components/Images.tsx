@@ -1,4 +1,4 @@
-import { type FC, useMemo, useState } from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 import { useAppSelector } from '@/hooks/redux';
 import { imageBaseUrlOriginal } from '@/services/themoviedb';
 import { shimmer, toBase64 } from '@/utilities/shimmer';
@@ -11,16 +11,27 @@ const Empty = dynamic(() => import('@/components/Empty'));
 const Images: FC = () => {
   const { movie, series } = useAppSelector((state) => state);
   const [index, setIndex] = useState(-1);
+  const [photos, setPhotos] = useState<
+    | {
+        src: string;
+        width: number;
+        height: number;
+        key: string;
+        alt: string;
+      }[]
+    | null
+  >(null);
 
   const closeLightbox = () => {
     setIndex(-1);
   };
 
-  const photos = useMemo(() => {
-    const condition =
+  const mapImages = useCallback(() => {
+    if (
       (movie.images && movie.images.backdrops.length === 0) ||
-      (series.images && series.images.backdrops.length === 0);
-    if (condition) return null;
+      (series.images && series.images.backdrops.length === 0)
+    )
+      return null;
 
     return (
       movie.images?.backdrops.map((image) => ({
@@ -39,6 +50,10 @@ const Images: FC = () => {
       }))
     );
   }, [movie.images, series.images]);
+
+  useEffect(() => {
+    setPhotos(mapImages() || null);
+  }, [mapImages, movie.images, series.images]);
 
   return (
     <div className='py-4 md:py-10 relative'>
