@@ -1,5 +1,5 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
-import type { IMovies } from '@/types/movies';
+import type { IMovies } from '@/types/movie';
 import type { ITvShows } from '@/types/series';
 import dynamic from 'next/dynamic';
 import Hero from '@/pages/Hero';
